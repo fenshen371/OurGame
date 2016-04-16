@@ -1,5 +1,9 @@
 5.3.1f1:2.1.0.0
+<<<<<<< 9ae8271752685cd94d15b926c12aaba53752f0aa
+Android
+=======
 WebPlayer
+>>>>>>> OurGame_DiamondTutorial_Music Control
 E:/Unity5/Editor/Data/Managed/UnityEngine.dll
 E:/Unity5/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll
 E:/Unity5/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll

@@ -1,2 +1,6 @@
+<<<<<<< 9ae8271752685cd94d15b926c12aaba53752f0aa
+m_EditorVersion: 5.3.1f1
+=======
 m_EditorVersion: 5.3.4f1
+>>>>>>> OurGame_DiamondTutorial_Music Control
 m_StandardAssetsVersion: 0

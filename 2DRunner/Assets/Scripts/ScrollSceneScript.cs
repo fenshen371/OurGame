@@ -1,21 +1,30 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+<<<<<<< 9ae8271752685cd94d15b926c12aaba53752f0aa
+=======
 using UnityEngine.UI;
+>>>>>>> OurGame_DiamondTutorial_Music Control
 
 public class ScrollSceneScript : MonoBehaviour {
     public GameObject environment;  //collection of all kinds of ground
     public GameObject coin;
     public GameObject power;
     public GameObject bomb;
+<<<<<<< 9ae8271752685cd94d15b926c12aaba53752f0aa
+    private Transform trans;
+=======
 	public Text diamondCount;
     private Transform trans;
 	private int diamond; 
+>>>>>>> OurGame_DiamondTutorial_Music Control
     private Transform scrollerTrans;
     private GameObject[] grounds;
     private LinkedList<GameObject> CurrentRoads = new LinkedList<GameObject>();
     private LinkedList<GameObject> CurrentCoins = new LinkedList<GameObject>();
 	// Use this for initialization
+<<<<<<< 9ae8271752685cd94d15b926c12aaba53752f0aa
+=======
 	int IntParseFast(string value)
 	{
 		int result = 0;
@@ -26,6 +35,7 @@ public class ScrollSceneScript : MonoBehaviour {
 		}
 		return result;
 	}
+>>>>>>> OurGame_DiamondTutorial_Music Control
 	void Start () {
         scrollerTrans = GetComponent<Transform>();
         //initialize the grounds collection
@@ -113,6 +123,20 @@ public class ScrollSceneScript : MonoBehaviour {
             CreateNewRoad();
         if (Input.GetKeyDown(KeyCode.B))
         {
+<<<<<<< 9ae8271752685cd94d15b926c12aaba53752f0aa
+            //int count = 0;
+            for (LinkedListNode<GameObject> it = CurrentCoins.First; it != null;)
+            {
+                if (it.Value.tag == "bomb")
+                {
+                    DestroyImmediate(it.Value);
+                    LinkedListNode<GameObject> itnext = it.Next;
+                    CurrentCoins.Remove(it);
+                    it = itnext;
+                }
+                else it = it.Next;
+            }
+=======
 			diamond = IntParseFast (diamondCount.text);
 			if (diamond >= 1) 
 			{
@@ -131,6 +155,7 @@ public class ScrollSceneScript : MonoBehaviour {
 				diamondCount.text = diamond.ToString ();
 			}
             //int count = 0;
+>>>>>>> OurGame_DiamondTutorial_Music Control
         }
 	}
 }
