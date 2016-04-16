@@ -4,8 +4,14 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
+<<<<<<< 9ae8271752685cd94d15b926c12aaba53752f0aa
+  m_Scenes: []
+=======
   m_Scenes:
   - enabled: 1
     path: Assets/_Scene/StartUI.unity
   - enabled: 1
     path: Assets/_Scene/2D Runner.unity
+  - enabled: 1
+    path: Assets/_Scene/StartOption.unity
+>>>>>>> OurGame_DiamondTutorial_Music Control
