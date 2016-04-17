@@ -1,18 +1,20 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Threading;
 
 public class PlayerScript : MonoBehaviour {
 
     public float upForce;       //upward force of the "jump"
     public float forwardSpeed;  //forward movement speed
     public bool isDead = false; //has the player collided with a obstacle?
-	public Text diamondCount;
+    public GameObject sceneScroller;    //use this to get access to ScrollSceneScript which is attached to it
     public Text scoreText;
     public float teleSpeed;     //moving speed of using binary star
     /////////////////////
     public GameObject panelForDiamondTutorial;
     ///////////////////
+    public GameObject explosion;    //when player touches bomb, the bomb will explode
 
     private float counter, dist;    //counter and dist are used for binary star
     private Rigidbody2D rbody;
@@ -23,8 +25,10 @@ public class PlayerScript : MonoBehaviour {
     private bool jump = false;          //has the player triggered a "jump"?
     private bool canJump = true;       //can the player jump at this moment?
     private bool run = false;           //is the player running?
-    private Vector3 startPos, endPos;   //the start and end position of tele
-
+    private Vector2 startPos, endPos;   //the start and end position of tele
+    private Transform trans;
+    private float gravScale; //the default gravScale of the player rigidbody
+    private Vector3 decScale = new Vector3(0.3f, 0.3f, 0f); //by which player scale will get smaller while using star
 
 
 
@@ -42,11 +46,12 @@ public class PlayerScript : MonoBehaviour {
 	void Start () {
         //get reference to the animator component
         anim = GetComponent<Animator>();
+        trans = GetComponent<Transform>();  //get the transform of player, this variable is mainly used for changing the scale of player
         //set the character moving forward
         rbody = GetComponent<Rigidbody2D>();
         rbody.velocity = new Vector2(forwardSpeed, 0);
         scoreText.text = "Score: " + score.ToString();
-		diamondCount.text = diamondCount.text = diamond.ToString ();
+        gravScale = rbody.gravityScale;
     }
 	
 	// Update is called once per frame
@@ -80,19 +85,30 @@ public class PlayerScript : MonoBehaviour {
            rbody.velocity = new Vector2(forwardSpeed, rbody.velocity.y);
         else if (tele)
         {
+            /*
             counter += 0.1f / teleSpeed;
             float x = Mathf.Lerp(0, dist, counter);
             rbody.position = x * Vector3.Normalize(endPos - startPos) + startPos;
+            */
+            float step = teleSpeed * Time.fixedDeltaTime;
+            trans.position = Vector2.MoveTowards(trans.position, endPos, step);
+            //print("tele: " + rbody.position.x.ToString() + " => " + endPos.x.ToString() + tele);
+            //print("tele Y: " + rbody.position.y.ToString() + " => " + endPos.y.ToString() + tele);
         }
     }
     void OnCollisionEnter2D(Collision2D other)
     {
         if (other.collider.tag == "Ground")//land on the ground
         {
+            if (tele)   //if using star at this moment
+            {
+                tele = false;
+                trans.localScale += decScale;
+                rbody.gravityScale = gravScale;
+            }
             run = true;
             canJump = true;
             jump = false;
-            tele = false;
             anim.SetBool("idle", false);
             anim.SetBool("jump", false);
             anim.SetBool("run", true);
@@ -116,9 +132,7 @@ public class PlayerScript : MonoBehaviour {
 		else if (other.tag == "power") 
 		{
 			other.gameObject.SetActive (false);
-			diamond = IntParseFast (diamondCount.text);
-			diamond++;
-			diamondCount.text = diamond.ToString ();
+            sceneScroller.GetComponent<ScrollSceneScript>().IncDiamondCount();  //add diamond count by 1
 
             //////////////////////ADD BY ZHENG///////////////////////
             /////////////////////////////////////////////////////////
@@ -138,8 +152,13 @@ public class PlayerScript : MonoBehaviour {
         else if (other.tag == "jumpCloud")
         {
             //can't do another jump while using jump cloud
+            if (tele)   //if using star at this moment
+            {
+                tele = false;
+                trans.localScale += decScale;
+                rbody.gravityScale = gravScale;
+            }
             canJump = false;
-            tele = false;
             other.gameObject.SetActive(false);
             anim.SetBool("jump", true);
             anim.SetBool("idle", false);
@@ -148,8 +167,12 @@ public class PlayerScript : MonoBehaviour {
             //giving the character some upward force
             rbody.AddForce(new Vector2(0, upForce));
         }
-        else if (other.tag == "starMain")
+        else if (other.tag == "starMain")   //touches the main star
         {
+            if (!tele)  //if player is not using star before
+                trans.localScale -= decScale;    //the player scale becomes smaller
+            rbody.gravityScale = 0.0f;  //while using star, player will not be affected by gravity
+            rbody.velocity = new Vector2(0f, 0f);
             canJump = false;
             tele = true;
             run = false;
@@ -159,16 +182,28 @@ public class PlayerScript : MonoBehaviour {
             endPos = other.transform.parent.GetComponent<Transform>().GetChild(1).transform.position;
             dist = Vector3.Distance(startPos, endPos);
             counter = 0;
+            rbody.position = startPos;
         }
         else if (other.tag == "starCom" && tele)    //reaches the star com while teling
         {
-            tele = false;
+            if (tele)   //if player is using star now, then when finished, its scale becomes normal as before
+            {
+                tele = false;
+                trans.localScale += decScale;
+                rbody.gravityScale = gravScale;
+            }
             other.transform.parent.GetComponent<LineRenderer>().SetWidth(0f, 0f);
             other.transform.parent.GetComponent<Transform>().GetChild(1).gameObject.SetActive(false);
             rbody.velocity = new Vector2(forwardSpeed, 0);
         }
         else if (other.tag == "bomb" || other.tag == "Vine")
         {
+            if (other.tag == "bomb")    //bomb explode
+            {
+                Destroy(other.gameObject);
+                GameObject expEffect = Instantiate(explosion, other.transform.position, Quaternion.identity) as GameObject;
+                Destroy(expEffect, 1);  //display the explosion effect at the same positon for 1s
+            }
             isDead = true;
             GameControl.current.Died();
         }
