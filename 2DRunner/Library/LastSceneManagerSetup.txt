@@ -1,8 +1,4 @@
 sceneSetups:
-<<<<<<< 9ae8271752685cd94d15b926c12aaba53752f0aa
 - path: Assets/_Scene/2D Runner.unity
-=======
-- path: Assets/_Scene/StartUI.unity
->>>>>>> OurGame_DiamondTutorial_Music Control
   isLoaded: 1
   isActive: 1

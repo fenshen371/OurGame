@@ -7,11 +7,8 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 {
     public GameObject jumpCloud;
     public GameObject binaryStar;
-<<<<<<< 9ae8271752685cd94d15b926c12aaba53752f0aa
-=======
     public GameObject JumplingCloudBeginnerGuidePanel;
     public GameObject StarsBeginnerGuidePanel;
->>>>>>> OurGame_DiamondTutorial_Music Control
 
     private static GameObject itemBeingDragged;
     private Vector3 startPosition;
@@ -19,11 +16,6 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     {
         Vector3 tem = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         startPosition = new Vector3(tem.x, tem.y, 0f);
-<<<<<<< 9ae8271752685cd94d15b926c12aaba53752f0aa
-        if (gameObject.CompareTag("jumpCloudButton"))       //generate a jump cloud
-            itemBeingDragged = Instantiate(jumpCloud, startPosition,
-                                        Quaternion.identity) as GameObject;
-=======
         if (gameObject.CompareTag("jumpCloudButton"))    //generate a jump cloud
         {   
             itemBeingDragged = Instantiate(jumpCloud, startPosition,
@@ -40,15 +32,12 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
             }
             ////////////////////////////////////////////////////////////////
         }
->>>>>>> OurGame_DiamondTutorial_Music Control
         else if (gameObject.CompareTag("binaryStarButton")) //generate a binary star
         {
             itemBeingDragged = Instantiate(binaryStar, startPosition,
                                         Quaternion.identity) as GameObject;
             itemBeingDragged.GetComponent<LineRenderer>().SetWidth(0f, 0f);
             itemBeingDragged.GetComponent<Transform>().GetChild(1).gameObject.SetActive(false);
-<<<<<<< 9ae8271752685cd94d15b926c12aaba53752f0aa
-=======
             ////////////////////new added codes by Zheng////////////////////
             if (PlayerPrefs.GetInt("FirstUseStars") == 1)
             {
@@ -60,7 +49,6 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
                 StarsBeginnerGuidePanel.SetActive(false);
             }
             ////////////////////////////////////////////////////////////////
->>>>>>> OurGame_DiamondTutorial_Music Control
         }
     }
 

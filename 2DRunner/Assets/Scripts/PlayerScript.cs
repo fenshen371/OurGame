@@ -7,34 +7,23 @@ public class PlayerScript : MonoBehaviour {
     public float upForce;       //upward force of the "jump"
     public float forwardSpeed;  //forward movement speed
     public bool isDead = false; //has the player collided with a obstacle?
-<<<<<<< 9ae8271752685cd94d15b926c12aaba53752f0aa
-    public Text scoreText;
-    public float teleSpeed;     //moving speed of using binary star
-=======
 	public Text diamondCount;
     public Text scoreText;
     public float teleSpeed;     //moving speed of using binary star
     /////////////////////
     public GameObject panelForDiamondTutorial;
     ///////////////////
->>>>>>> OurGame_DiamondTutorial_Music Control
 
     private float counter, dist;    //counter and dist are used for binary star
     private Rigidbody2D rbody;
     private int score = 0;
-<<<<<<< 9ae8271752685cd94d15b926c12aaba53752f0aa
-=======
 	private int diamond = 0;
->>>>>>> OurGame_DiamondTutorial_Music Control
     private bool tele = false;      //is the player using binary star? 
     private Animator anim;              //reference to the animator component
     private bool jump = false;          //has the player triggered a "jump"?
     private bool canJump = true;       //can the player jump at this moment?
     private bool run = false;           //is the player running?
     private Vector3 startPos, endPos;   //the start and end position of tele
-<<<<<<< 9ae8271752685cd94d15b926c12aaba53752f0aa
-    // Use this for initialization
-=======
 
 
 
@@ -50,7 +39,6 @@ public class PlayerScript : MonoBehaviour {
 		}
 		return result;
 	}
->>>>>>> OurGame_DiamondTutorial_Music Control
 	void Start () {
         //get reference to the animator component
         anim = GetComponent<Animator>();
@@ -58,10 +46,7 @@ public class PlayerScript : MonoBehaviour {
         rbody = GetComponent<Rigidbody2D>();
         rbody.velocity = new Vector2(forwardSpeed, 0);
         scoreText.text = "Score: " + score.ToString();
-<<<<<<< 9ae8271752685cd94d15b926c12aaba53752f0aa
-=======
 		diamondCount.text = diamondCount.text = diamond.ToString ();
->>>>>>> OurGame_DiamondTutorial_Music Control
     }
 	
 	// Update is called once per frame
@@ -122,13 +107,6 @@ public class PlayerScript : MonoBehaviour {
     }
     void OnTriggerEnter2D(Collider2D other)
     {
-<<<<<<< 9ae8271752685cd94d15b926c12aaba53752f0aa
-        if (other.tag == "coin" || other.tag == "power")
-        {
-            other.gameObject.SetActive(false);
-            score++;
-            scoreText.text = "Score: " + score.ToString();
-=======
 		if (other.tag == "coin") 
 		{
 			other.gameObject.SetActive (false);
@@ -156,7 +134,6 @@ public class PlayerScript : MonoBehaviour {
             }
             /////////////////////////////////////////////////////////
             ///////////////////////END OF ADD////////////////////////
->>>>>>> OurGame_DiamondTutorial_Music Control
         }
         else if (other.tag == "jumpCloud")
         {

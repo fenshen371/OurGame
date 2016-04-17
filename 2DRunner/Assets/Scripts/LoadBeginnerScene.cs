@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class LoadBeginnerScene : MonoBehaviour {
     public void LoadNewScene(int sceneNum)
@@ -24,7 +25,6 @@ public class LoadBeginnerScene : MonoBehaviour {
         }
 
         PlayerPrefs.Save();
-
-        Application.LoadLevel(sceneNum);
+        SceneManager.LoadScene(sceneNum);
     }
 }

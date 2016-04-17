@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class LoadOptionScene : MonoBehaviour {
 
@@ -19,6 +20,6 @@ public class LoadOptionScene : MonoBehaviour {
             PlayerPrefs.SetInt("EffectOn", 1);
         }
         //Debug.Log(PlayerPrefs.GetInt("MusicOn"));
-        Application.LoadLevel(sceneNum);
+        SceneManager.LoadScene(sceneNum);
     }
 }
