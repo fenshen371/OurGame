@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using System.Threading;
+using UnityEngine.Audio;
 
 public class PlayerScript : MonoBehaviour {
 
@@ -15,11 +16,10 @@ public class PlayerScript : MonoBehaviour {
     public GameObject panelForDiamondTutorial;
     ///////////////////
     public GameObject explosion;    //when player touches bomb, the bomb will explode
+	public AudioClip[] stings;
 
-    private float counter, dist;    //counter and dist are used for binary star
     private Rigidbody2D rbody;
     private int score = 0;
-	private int diamond = 0;
     private bool tele = false;      //is the player using binary star? 
     private Animator anim;              //reference to the animator component
     private bool jump = false;          //has the player triggered a "jump"?
@@ -29,7 +29,7 @@ public class PlayerScript : MonoBehaviour {
     private Transform trans;
     private float gravScale; //the default gravScale of the player rigidbody
     private Vector3 decScale = new Vector3(0.3f, 0.3f, 0f); //by which player scale will get smaller while using star
-
+    private AudioSource source;
 
 
     // Use this for initialization
@@ -47,7 +47,8 @@ public class PlayerScript : MonoBehaviour {
         //get reference to the animator component
         anim = GetComponent<Animator>();
         trans = GetComponent<Transform>();  //get the transform of player, this variable is mainly used for changing the scale of player
-        //set the character moving forward
+                                            //set the character moving forward 
+        source = GetComponent<AudioSource>();
         rbody = GetComponent<Rigidbody2D>();
         rbody.velocity = new Vector2(forwardSpeed, 0);
         scoreText.text = "Score: " + score.ToString();
@@ -80,6 +81,7 @@ public class PlayerScript : MonoBehaviour {
             rbody.velocity = new Vector2(forwardSpeed, 0);
             //giving the character some upward force
             rbody.AddForce(new Vector2(0, upForce));
+			PlaySound (2);
         }
         else if (run)
            rbody.velocity = new Vector2(forwardSpeed, rbody.velocity.y);
@@ -121,6 +123,13 @@ public class PlayerScript : MonoBehaviour {
         }
        //else run = false;
     }
+	public void PlaySound(int clip)
+	{
+        if (PlayerPrefs.GetInt("EffectOn") == 0)    //if effect sound is muted, then don't play sound
+            return;
+        source.clip = stings [clip];
+		source.Play ();
+	}
     void OnTriggerEnter2D(Collider2D other)
     {
 		if (other.tag == "coin") 
@@ -128,12 +137,14 @@ public class PlayerScript : MonoBehaviour {
 			other.gameObject.SetActive (false);
 			score++;
 			scoreText.text = "Score: " + score.ToString ();
+            if (source.isPlaying == false)  //don't play duplicate coin sound
+                PlaySound(4);
 		} 
 		else if (other.tag == "power") 
 		{
 			other.gameObject.SetActive (false);
             sceneScroller.GetComponent<ScrollSceneScript>().IncDiamondCount();  //add diamond count by 1
-
+			PlaySound (1);
             //////////////////////ADD BY ZHENG///////////////////////
             /////////////////////////////////////////////////////////
             if (PlayerPrefs.GetInt("FirstCollectDiamond") == 1)
@@ -166,6 +177,7 @@ public class PlayerScript : MonoBehaviour {
             rbody.velocity = new Vector2(forwardSpeed, 0);
             //giving the character some upward force
             rbody.AddForce(new Vector2(0, upForce));
+			PlaySound (2);
         }
         else if (other.tag == "starMain")   //touches the main star
         {
@@ -180,8 +192,6 @@ public class PlayerScript : MonoBehaviour {
             startPos = other.transform.position;
             other.gameObject.SetActive(false);
             endPos = other.transform.parent.GetComponent<Transform>().GetChild(1).transform.position;
-            dist = Vector3.Distance(startPos, endPos);
-            counter = 0;
             rbody.position = startPos;
         }
         else if (other.tag == "starCom" && tele)    //reaches the star com while teling
@@ -192,18 +202,22 @@ public class PlayerScript : MonoBehaviour {
                 trans.localScale += decScale;
                 rbody.gravityScale = gravScale;
             }
+			PlaySound (3);
             other.transform.parent.GetComponent<LineRenderer>().SetWidth(0f, 0f);
             other.transform.parent.GetComponent<Transform>().GetChild(1).gameObject.SetActive(false);
             rbody.velocity = new Vector2(forwardSpeed, 0);
         }
-        else if (other.tag == "bomb" || other.tag == "Vine")
+        else if (other.tag == "bomb" || other.tag == "Vine" || other.tag == "rock")
         {
             if (other.tag == "bomb")    //bomb explode
             {
                 Destroy(other.gameObject);
                 GameObject expEffect = Instantiate(explosion, other.transform.position, Quaternion.identity) as GameObject;
                 Destroy(expEffect, 1);  //display the explosion effect at the same positon for 1s
+                PlaySound(0);
             }
+            else if (other.tag == "rock")   //play effect sound
+                PlaySound(0);
             isDead = true;
             GameControl.current.Died();
         }
