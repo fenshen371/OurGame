@@ -4,11 +4,12 @@ using System.Collections;
 public class FallingStonesScript : MonoBehaviour {
     public float leftwardSpeed; //leftward speed of the falling stone
     public GameObject rock; //this is the falling stone
-    private float lastFired = 0f;   //last time to generate a falling stone
+    private float lastFired;   //last time to generate a falling stone
     private Transform startPos; //the position to generate a falling stone
     // Use this for initialization
 	void Start () {
         startPos = transform.FindChild("StoneStartPos");    //get the position
+        lastFired = Time.time - 2f;
 	}
 	
     void FixedUpdate ()

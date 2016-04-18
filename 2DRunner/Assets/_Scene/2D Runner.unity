@@ -4425,7 +4425,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c22dfea2e1e6404faa3781a1496f07b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftwardSpeed: 7
+  leftwardSpeed: 8
   rock: {fileID: 1643171647}
 --- !u!1 &810671434
 GameObject:
@@ -4553,6 +4553,10 @@ Prefab:
     - target: {fileID: 21272202, guid: 3c32bae17fbb11948b3219dab2643660, type: 2}
       propertyPath: m_SortingLayerID
       value: 1093696345
+      objectReference: {fileID: 0}
+    - target: {fileID: 21272202, guid: 3c32bae17fbb11948b3219dab2643660, type: 2}
+      propertyPath: m_SortingOrder
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6011666, guid: 3c32bae17fbb11948b3219dab2643660, type: 2}
@@ -5814,6 +5818,10 @@ Prefab:
     - target: {fileID: 5887056, guid: 61bfdabd0b21c824c807f3bd84419d8a, type: 2}
       propertyPath: m_Radius
       value: 0.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 21277500, guid: 61bfdabd0b21c824c807f3bd84419d8a, type: 2}
+      propertyPath: m_SortingOrder
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 61bfdabd0b21c824c807f3bd84419d8a, type: 2}
@@ -7181,7 +7189,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1202809457}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.52, y: 8.41, z: 0}
+  m_LocalPosition: {x: 3.52, y: 5.41, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 15893272}
@@ -7662,7 +7670,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1093696345
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 204715ac1a0645549acadac8b341bc98, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -9013,7 +9021,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1093696345
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 1ebf54dc41ee3b34c9a3a67eb5d2c39e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -11225,5 +11233,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 261d50dde9047c14da846ccca36e5010, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vineSpeed: 1
+  vineSpeed: 2
   verticalMoving: 1

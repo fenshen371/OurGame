@@ -194,14 +194,11 @@ public class PlayerScript : MonoBehaviour {
             endPos = other.transform.parent.GetComponent<Transform>().GetChild(1).transform.position;
             rbody.position = startPos;
         }
-        else if (other.tag == "starCom" && tele)    //reaches the star com while teling
+        else if (other.tag == "starCom" && tele && Vector2.Distance(endPos, other.transform.position) < 0.1f)    //reaches the destination star com while teling
         {
-            if (tele)   //if player is using star now, then when finished, its scale becomes normal as before
-            {
-                tele = false;
-                trans.localScale += decScale;
-                rbody.gravityScale = gravScale;
-            }
+            tele = false;
+            trans.localScale += decScale;
+            rbody.gravityScale = gravScale;
 			PlaySound (3);
             other.transform.parent.GetComponent<LineRenderer>().SetWidth(0f, 0f);
             other.transform.parent.GetComponent<Transform>().GetChild(1).gameObject.SetActive(false);
