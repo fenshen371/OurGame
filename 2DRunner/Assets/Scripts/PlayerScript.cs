@@ -183,16 +183,16 @@ public class PlayerScript : MonoBehaviour {
         {
             if (!tele)  //if player is not using star before
                 trans.localScale -= decScale;    //the player scale becomes smaller
+            startPos = other.transform.position;
+            trans.position = startPos;
+            other.gameObject.SetActive(false);
+            endPos = other.transform.parent.GetComponent<Transform>().GetChild(1).transform.position;
             rbody.gravityScale = 0.0f;  //while using star, player will not be affected by gravity
             rbody.velocity = new Vector2(0f, 0f);
             canJump = false;
             tele = true;
             run = false;
-            anim.SetBool("idle", true);
-            startPos = other.transform.position;
-            other.gameObject.SetActive(false);
-            endPos = other.transform.parent.GetComponent<Transform>().GetChild(1).transform.position;
-            rbody.position = startPos;
+            anim.SetBool("idle", true);     
         }
         else if (other.tag == "starCom" && tele && Vector2.Distance(endPos, other.transform.position) < 0.1f)    //reaches the destination star com while teling
         {
