@@ -17,7 +17,7 @@ public class FallingStonesScript : MonoBehaviour {
         {
             GameObject newRock = Instantiate(rock, startPos.position, Quaternion.identity) as GameObject;
             Rigidbody2D rbody = newRock.GetComponent<Rigidbody2D>();
-            rbody.gravityScale = 1f;    //stone is affacted by gravity
+            rbody.gravityScale = 0.8f;    //stone is affacted by gravity
             rbody.velocity = new Vector2(-leftwardSpeed, 0f);   //flies to left
             Destroy(newRock, 2f);
             lastFired = Time.time;
